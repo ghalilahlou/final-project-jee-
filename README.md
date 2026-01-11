@@ -1024,7 +1024,7 @@ Année Académique 2025-2026
 ### Réseaux
 
 - 🔗 GitHub : [@ghalilahlou](https://github.com/ghalilahlou)
-- 📧 Email : [disponible sur demande]
+- 📧 Email : [ghalilahlou26@gmail.com](mailto:ghalilahlou26@gmail.com)
 
 ---
 
