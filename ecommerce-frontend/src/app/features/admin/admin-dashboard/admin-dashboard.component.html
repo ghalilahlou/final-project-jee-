@@ -1,0 +1,134 @@
+<div class="admin-dashboard-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a routerLink="/" class="logo">
+                <span class="logo-icon">🛒</span>
+                <span class="logo-text">E-Commerce Admin</span>
+            </a>
+
+            <nav class="nav">
+                <a routerLink="/" class="nav-link">Retour au site</a>
+                <a routerLink="/admin" class="nav-link active">Dashboard</a>
+                <a routerLink="/profile" class="btn btn-primary btn-sm">Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Dashboard Administrateur</h1>
+            <p class="page-subtitle">Vue d'ensemble de votre plateforme e-commerce</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="main-content">
+        <div class="container">
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div *ngFor="let stat of stats" class="stat-card card" [class]="'stat-' + stat.color">
+                    <div class="stat-icon">{{ stat.icon }}</div>
+                    <div class="stat-content">
+                        <h3 class="stat-value">{{ stat.value }}</h3>
+                        <p class="stat-title">{{ stat.title }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Recent Orders -->
+                <div class="orders-section card">
+                    <div class="section-header">
+                        <h2 class="section-title">Commandes Récentes</h2>
+                        <a routerLink="/admin/orders" class="btn btn-ghost btn-sm">Voir tout</a>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Client</th>
+                                    <th>Montant</th>
+                                    <th>Statut</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let order of recentOrders">
+                                    <td class="order-id">{{ order.id }}</td>
+                                    <td class="customer-name">{{ order.customer }}</td>
+                                    <td class="order-amount">{{ order.amount }} MAD</td>
+                                    <td>
+                                        <span class="badge" [class.badge-success]="order.status === 'Livrée'"
+                                            [class.badge-warning]="order.status === 'En cours'"
+                                            [class.badge-primary]="order.status === 'En préparation'">
+                                            {{ order.status }}
+                                        </span>
+                                    </td>
+                                    <td class="order-date">{{ order.date | date:'dd/MM/yyyy' }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Top Products -->
+                <div class="products-section card">
+                    <div class="section-header">
+                        <h2 class="section-title">Top Produits</h2>
+                        <a routerLink="/admin/products" class="btn btn-ghost btn-sm">Gérer</a>
+                    </div>
+
+                    <div class="products-list">
+                        <div *ngFor="let product of topProducts" class="product-item">
+                            <div class="product-info">
+                                <h4 class="product-name">{{ product.name }}</h4>
+                                <p class="product-stats">
+                                    <span class="sales-count">{{ product.sales }} ventes</span>
+                                </p>
+                            </div>
+                            <div class="product-revenue">
+                                <span class="revenue-amount">{{ product.revenue | number:'1.0-0' }}</span>
+                                <span class="revenue-currency">MAD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions card">
+                <h2 class="section-title">Actions Rapides</h2>
+                <div class="actions-grid">
+                    <button class="action-btn">
+                        <span class="action-icon">➕</span>
+                        <span class="action-text">Ajouter Produit</span>
+                    </button>
+                    <button class="action-btn">
+                        <span class="action-icon">📋</span>
+                        <span class="action-text">Gérer Commandes</span>
+                    </button>
+                    <button class="action-btn">
+                        <span class="action-icon">👥</span>
+                        <span class="action-text">Gérer Clients</span>
+                    </button>
+                    <button class="action-btn">
+                        <span class="action-icon">📊</span>
+                        <span class="action-text">Voir Rapports</span>
+                    </button>
+                    <button class="action-btn">
+                        <span class="action-icon">⚙️</span>
+                        <span class="action-text">Paramètres</span>
+                    </button>
+                    <button class="action-btn">
+                        <span class="action-icon">💬</span>
+                        <span class="action-text">Messages Chatbot</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

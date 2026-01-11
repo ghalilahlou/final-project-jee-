@@ -1,0 +1,119 @@
+<div class="product-list-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a routerLink="/" class="logo">
+                    <span class="logo-icon">🛒</span>
+                    <span class="logo-text">E-Commerce</span>
+                </a>
+
+                <nav class="nav">
+                    <a routerLink="/" class="nav-link">Accueil</a>
+                    <a routerLink="/products" class="nav-link active">Produits</a>
+                    <a routerLink="/chatbot" class="nav-link">Assistance</a>
+                    <a routerLink="/orders" class="nav-link">Mes Commandes</a>
+                    <a routerLink="/cart" class="nav-link cart-link">
+                        <span>🛒</span>
+                        <span class="cart-badge">0</span>
+                    </a>
+                    <a routerLink="/profile" class="btn btn-primary btn-sm">Mon Compte</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Catalogue Produits</h1>
+            <p class="page-subtitle">Découvrez notre sélection de produits de qualité</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="main-content">
+        <div class="container">
+            <!-- Filters Bar -->
+            <div class="filters-bar card">
+                <div class="search-box">
+                    <input type="text" [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()"
+                        placeholder="Rechercher un produit..." class="search-input" />
+                    <span class="search-icon">🔍</span>
+                </div>
+
+                <div class="filter-group">
+                    <label>Catégorie</label>
+                    <select [(ngModel)]="selectedCategory" (ngModelChange)="onCategoryChange()" class="filter-select">
+                        <option value="">Toutes les catégories</option>
+                        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Trier par</label>
+                    <select [(ngModel)]="sortBy" (ngModelChange)="onSortChange()" class="filter-select">
+                        <option value="name">Nom A-Z</option>
+                        <option value="price-asc">Prix croissant</option>
+                        <option value="price-desc">Prix décroissant</option>
+                    </select>
+                </div>
+
+                <div class="results-count">
+                    <span class="badge badge-primary">{{ filteredProducts.length }} produits</span>
+                </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div *ngIf="isLoading" class="loading-container">
+                <div class="spinner"></div>
+                <p>Chargement des produits...</p>
+            </div>
+
+            <!-- Products Grid -->
+            <div *ngIf="!isLoading && filteredProducts.length > 0" class="products-grid">
+                <div *ngFor="let product of filteredProducts" class="product-card card">
+                    <div class="product-image">
+                        <div class="image-placeholder">{{ product.images?.[0] || '📦' }}</div>
+                        <div class="stock-badge" [class.low-stock]="product.stockQuantity < 20">
+                            {{ product.stockQuantity }} en stock
+                        </div>
+                    </div>
+
+                    <div class="product-content">
+                        <div class="product-category">{{ product.category }}</div>
+                        <h3 class="product-name">{{ product.name }}</h3>
+                        <p class="product-description">{{ product.description }}</p>
+
+                        <div class="product-footer">
+                            <div class="product-price">
+                                <span class="price-amount">{{ product.price }}</span>
+                                <span class="price-currency">MAD</span>
+                            </div>
+
+                            <div class="product-actions">
+                                <button (click)="addToCart(product)" class="btn btn-primary btn-sm">
+                                    <span>Ajouter</span>
+                                    <span>🛒</span>
+                                </button>
+                                <a [routerLink]="['/products', product.id]" class="btn btn-ghost btn-sm">
+                                    Détails →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div *ngIf="!isLoading && filteredProducts.length === 0" class="empty-state">
+                <div class="empty-icon">🔍</div>
+                <h3>Aucun produit trouvé</h3>
+                <p>Essayez de modifier vos critères de recherche</p>
+                <button (click)="searchTerm = ''; selectedCategory = ''; filterProducts()" class="btn btn-primary">
+                    Réinitialiser les filtres
+                </button>
+            </div>
+        </div>
+    </section>
+</div>

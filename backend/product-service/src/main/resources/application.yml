@@ -1,0 +1,70 @@
+spring:
+  application:
+    name: product-service
+  
+  # Configuration Kafka
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  
+  # Configuration Base de données
+  datasource:
+    url: jdbc:mysql://localhost:3306/product_db?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+  
+  # Initialisation des données
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
+      continue-on-error: true
+  
+  # Configuration Redis
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 60000
+  
+  # Configuration Cache
+  cache:
+    type: redis
+    redis:
+      time-to-live: 600000 # 10 minutes
+
+# Configuration du serveur
+server:
+  port: 8082
+
+# Actuator endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+# Topics Kafka
+kafka:
+  topics:
+    product-events: product-events
+
+# Logging
+logging:
+  level:
+    com.ghali.ecommerce.product: DEBUG
+    org.hibernate.SQL: DEBUG

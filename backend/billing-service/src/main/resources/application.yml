@@ -1,0 +1,74 @@
+spring:
+  application:
+    name: billing-service
+  
+  # Configuration Kafka
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: billing-consumer-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  
+  # Configuration Base de données
+  datasource:
+    url: jdbc:mysql://localhost:3306/billing_db?createDatabaseIfNotExist=true
+    username: root
+    password: root123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+
+# Configuration du serveur
+server:
+  port: 8087
+
+# Actuator endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+# Topics Kafka
+kafka:
+  topics:
+    order-events: order-events
+    billing-events: billing-events
+
+# Configuration Billing
+billing:
+  company:
+    name: "E-Commerce Ghali"
+    address: "123 Rue Commerce, Casablanca, Maroc"
+    phone: "+212 5 22 00 00 00"
+    email: "contact@ecommerce-ghali.ma"
+    tax-id: "12345678"
+  
+  tax:
+    vat-rate: 0.20  # 20% TVA
+  
+  invoice:
+    prefix: "INV"
+    pdf-storage-path: "./invoices"
+
+# Logging
+logging:
+  level:
+    com.ghali.ecommerce.billing: DEBUG

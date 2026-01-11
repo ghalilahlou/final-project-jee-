@@ -1,0 +1,92 @@
+<div class="login-page">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a routerLink="/" class="logo">
+                <span class="logo-icon">🛒</span>
+                <span class="logo-text">E-Commerce</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Login Form -->
+    <div class="login-container">
+        <div class="login-card card">
+            <div class="login-header">
+                <h1>Connexion</h1>
+                <p>Connectez-vous à votre compte</p>
+            </div>
+
+            <form (ngSubmit)="onSubmit()" class="login-form">
+                <!-- Error Message -->
+                <div *ngIf="errorMessage" class="error-message">
+                    <span class="error-icon">⚠️</span>
+                    <span>{{ errorMessage }}</span>
+                </div>
+
+                <!-- Username -->
+                <div class="form-group">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" id="username" [(ngModel)]="credentials.username" name="username"
+                        placeholder="Entrez votre nom d'utilisateur" [disabled]="loading" required />
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" [(ngModel)]="credentials.password" name="password"
+                        placeholder="Entrez votre mot de passe" [disabled]="loading" required />
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-lg" [disabled]="loading">
+                    <span *ngIf="!loading">Se connecter</span>
+                    <span *ngIf="loading" class="spinner"></span>
+                </button>
+
+                <!-- Quick Fill Buttons (Development Only) -->
+                <div class="quick-fill">
+                    <p class="quick-fill-title">🔧 Comptes de test :</p>
+                    <div class="quick-fill-buttons">
+                        <button type="button" class="btn btn-secondary btn-sm" (click)="quickFill('admin')"
+                            [disabled]="loading">
+                            Admin Test
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm" (click)="quickFill('customer')"
+                            [disabled]="loading">
+                            Client Test
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="login-footer">
+                <p>
+                    <a routerLink="/">← Retour à l'accueil</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Info Card -->
+        <div class="info-card card">
+            <h3>Comptes de test disponibles</h3>
+            <div class="test-accounts">
+                <div class="account">
+                    <div class="account-badge admin">ADMIN</div>
+                    <p><strong>Username:</strong> admin</p>
+                    <p><strong>Password:</strong> admin123</p>
+                </div>
+                <div class="account">
+                    <div class="account-badge customer">CLIENT</div>
+                    <p><strong>Username:</strong> customer</p>
+                    <p><strong>Password:</strong> customer123</p>
+                </div>
+                <div class="account">
+                    <div class="account-badge customer">CLIENT</div>
+                    <p><strong>Username:</strong> sarah</p>
+                    <p><strong>Password:</strong> sarah123</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

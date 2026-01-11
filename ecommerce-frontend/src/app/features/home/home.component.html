@@ -1,0 +1,135 @@
+<div class="home-page">
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🛒</span>
+                    <span class="logo-text">E-Commerce</span>
+                </div>
+
+                <nav class="nav">
+                    <a routerLink="/products" class="nav-link">Produits</a>
+                    <a routerLink="/chatbot" class="nav-link">Assistance</a>
+                    <a routerLink="/orders" class="nav-link">Mes Commandes</a>
+                    <a routerLink="/cart" class="nav-link cart-link">
+                        <span>🛒</span>
+                        <span class="cart-badge">0</span>
+                    </a>
+                    <a routerLink="/profile" class="btn btn-primary btn-sm">Mon Compte</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1 class="hero-title">
+                    Bienvenue sur votre
+                    <span class="gradient-text">Plateforme E-Commerce</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Découvrez des milliers de produits de qualité avec une livraison rapide et un service client
+                    exceptionnel
+                </p>
+                <div class="hero-buttons">
+                    <a routerLink="/products" class="btn btn-primary btn-lg">
+                        <span>Explorer les Produits</span>
+                        <span>→</span>
+                    </a>
+                    <a routerLink="/chatbot" class="btn btn-secondary btn-lg">
+                        <span>Parler à notre Assistant IA</span>
+                        <span>🤖</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <div class="floating-card card-1">
+                    <span class="emoji">📦</span>
+                    <p>Livraison Rapide</p>
+                </div>
+                <div class="floating-card card-2">
+                    <span class="emoji">✨</span>
+                    <p>Qualité Premium</p>
+                </div>
+                <div class="floating-card card-3">
+                    <span class="emoji">💯</span>
+                    <p>100% Sécurisé</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title text-center">Pourquoi nous choisir ?</h2>
+            <div class="grid grid-4">
+                <div class="feature-card card" *ngFor="let feature of features">
+                    <div class="feature-icon">{{ feature.icon }}</div>
+                    <h3 class="feature-title">{{ feature.title }}</h3>
+                    <p class="feature-description">{{ feature.description }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title text-center">Parcourir par Catégorie</h2>
+            <div class="grid grid-4">
+                <a [href]="category.link" class="category-card card" *ngFor="let category of categories">
+                    <div class="category-icon">{{ category.image }}</div>
+                    <h3 class="category-name">{{ category.name }}</h3>
+                    <span class="category-link-text">Découvrir →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content card">
+                <h2 class="cta-title">Prêt à commencer vos achats ?</h2>
+                <p class="cta-subtitle">Inscrivez-vous maintenant et profitez de -20% sur votre première commande</p>
+                <div class="cta-buttons">
+                    <a routerLink="/products" class="btn btn-primary btn-lg">Commencer Maintenant</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>E-Commerce Platform</h4>
+                    <p>Votre destination shopping de confiance</p>
+                </div>
+                <div class="footer-section">
+                    <h5>Liens Rapides</h5>
+                    <a routerLink="/products">Produits</a>
+                    <a routerLink="/orders">Mes Commandes</a>
+                    <a routerLink="/chatbot">Assistance</a>
+                </div>
+                <div class="footer-section">
+                    <h5>Suivez-nous</h5>
+                    <div class="social-links">
+                        <a href="#" class="social-link">Facebook</a>
+                        <a href="#" class="social-link">Twitter</a>
+                        <a href="#" class="social-link">Instagram</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 E-Commerce Platform. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+</div>

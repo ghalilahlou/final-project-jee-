@@ -1,0 +1,149 @@
+{
+    "realm": "ecommerce-realm",
+    "enabled": true,
+    "displayName": "E-Commerce Realm",
+    "registrationAllowed": true,
+    "registrationEmailAsUsername": false,
+    "rememberMe": true,
+    "verifyEmail": false,
+    "loginWithEmailAllowed": true,
+    "duplicateEmailsAllowed": false,
+    "resetPasswordAllowed": true,
+    "editUsernameAllowed": false,
+    "bruteForceProtected": true,
+    "accessTokenLifespan": 3600,
+    "ssoSessionIdleTimeout": 1800,
+    "ssoSessionMaxLifespan": 36000,
+    "accessCodeLifespan": 60,
+    "accessCodeLifespanUserAction": 300,
+    "roles": {
+        "realm": [
+            {
+                "name": "ADMIN",
+                "description": "Administrator role"
+            },
+            {
+                "name": "CUSTOMER",
+                "description": "Customer role"
+            },
+            {
+                "name": "VENDOR",
+                "description": "Vendor role"
+            }
+        ]
+    },
+    "clients": [
+        {
+            "clientId": "ecommerce-frontend",
+            "enabled": true,
+            "publicClient": true,
+            "redirectUris": [
+                "http://localhost:4200/*",
+                "http://localhost:58623/*"
+            ],
+            "webOrigins": [
+                "http://localhost:4200",
+                "http://localhost:58623"
+            ],
+            "directAccessGrantsEnabled": true,
+            "standardFlowEnabled": true,
+            "implicitFlowEnabled": false,
+            "serviceAccountsEnabled": false,
+            "authorizationServicesEnabled": false
+        },
+        {
+            "clientId": "gateway-client",
+            "enabled": true,
+            "publicClient": false,
+            "secret": "gateway-secret-key-2024",
+            "redirectUris": [
+                "http://localhost:8081/*"
+            ],
+            "webOrigins": [
+                "http://localhost:8081"
+            ],
+            "directAccessGrantsEnabled": true,
+            "standardFlowEnabled": true,
+            "serviceAccountsEnabled": true,
+            "authorizationServicesEnabled": false
+        }
+    ],
+    "users": [
+        {
+            "username": "admin",
+            "enabled": true,
+            "emailVerified": true,
+            "firstName": "Admin",
+            "lastName": "System",
+            "email": "admin@ecommerce.com",
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "admin123",
+                    "temporary": false
+                }
+            ],
+            "realmRoles": [
+                "ADMIN"
+            ],
+            "clientRoles": {}
+        },
+        {
+            "username": "customer",
+            "enabled": true,
+            "emailVerified": true,
+            "firstName": "Ahmed",
+            "lastName": "Benali",
+            "email": "customer@example.com",
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "customer123",
+                    "temporary": false
+                }
+            ],
+            "realmRoles": [
+                "CUSTOMER"
+            ],
+            "clientRoles": {}
+        },
+        {
+            "username": "sarah",
+            "enabled": true,
+            "emailVerified": true,
+            "firstName": "Sarah",
+            "lastName": "Alaoui",
+            "email": "sarah@example.com",
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "sarah123",
+                    "temporary": false
+                }
+            ],
+            "realmRoles": [
+                "CUSTOMER"
+            ],
+            "clientRoles": {}
+        },
+        {
+            "username": "youssef",
+            "enabled": true,
+            "emailVerified": true,
+            "firstName": "Youssef",
+            "lastName": "Idrissi",
+            "email": "youssef@example.com",
+            "credentials": [
+                {
+                    "type": "password",
+                    "value": "youssef123",
+                    "temporary": false
+                }
+            ],
+            "realmRoles": [
+                "CUSTOMER"
+            ],
+            "clientRoles": {}
+        }
+    ]
+}

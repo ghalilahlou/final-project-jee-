@@ -1,0 +1,158 @@
+spring:
+  application:
+    name: gateway-service
+  
+  cloud:
+    gateway:
+      routes:
+        # Route vers Product Service
+        - id: product-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/products/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+        
+        # Route vers Order Service
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/orders/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+        
+        # Route vers User Service
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+        
+        # Route vers Chatbot Service (public)
+        - id: chatbot-service
+          uri: http://localhost:8085
+          predicates:
+            - Path=/api/chatbot/**
+        
+        # Route vers Billing Service (privé)
+        - id: billing-service
+          uri: http://localhost:8087
+          predicates:
+            - Path=/api/invoices/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+        
+        # Route vers Customer Service (clients)
+        - id: customer-service
+          uri: http://localhost:8086
+          predicates:
+            - Path=/api/customers/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+        
+        # Route vers User Service (admin/vendeurs)
+        - id: user-service
+          uri: http://localhost:8088
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+        
+        # Route vers Notification Service (privé - admin seulement)
+        - id: notification-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/notifications/**
+      
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            exposedHeaders:
+              - Authorization
+  
+  # Configuration OAuth2 avec Keycloak (TEMPORAIREMENT DÉSACTIVÉE)
+  # Décommenter quand Keycloak est prêt
+  # security:
+  #   oauth2:
+  #     resourceserver:
+  #       jwt:
+  #         issuer-uri: http://localhost:8080/realms/ecommerce-realm
+  #         jwk-set-uri: http://localhost:8080/realms/ecommerce-realm/protocol/openid-connect/certs
+      
+      # client:
+      #   registration:
+      #     keycloak:
+      #       client-id: gateway-client
+      #       client-secret: ${KEYCLOAK_CLIENT_SECRET:your-client-secret}
+      #       authorization-grant-type: authorization_code
+      #       redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+      #       scope:
+      #         - openid
+      #         - profile
+      #         - email
+        
+        # provider:
+        #   keycloak:
+        #     issuer-uri: http://localhost:8080/realms/ecommerce-realm
+        #     authorization-uri: http://localhost:8080/realms/ecommerce-realm/protocol/openid-connect/auth
+        #     token-uri: http://localhost:8080/realms/ecommerce-realm/protocol/openid-connect/token
+        #     user-info-uri: http://localhost:8080/realms/ecommerce-realm/protocol/openid-connect/userinfo
+        #     jwk-set-uri: http://localhost:8080/realms/ecommerce-realm/protocol/openid-connect/certs
+        #     user-name-attribute: preferred_username
+  
+  # Redis
+  redis:
+    host: localhost
+    port: 6379
+
+# Configuration du serveur
+server:
+  port: 8081
+
+# Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,gateway
+  endpoint:
+    health:
+      show-details: always
+    gateway:
+      enabled: true
+
+# Logging
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.security: DEBUG
